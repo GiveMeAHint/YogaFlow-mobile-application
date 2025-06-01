@@ -24,6 +24,10 @@ import Music from './components/Music';
 import Account from './components/Account';
 import YogaEkb from './components/YogaEkb';
 
+import { Fonts } from './styles/fonts';
+
+
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -104,6 +108,7 @@ export default function App() {
         },
       }}
     >
+
       <Tab.Screen
         name="Music"
         component={Music}
@@ -251,10 +256,18 @@ export default function App() {
         >
           <View style={styles.modalOverlay}>
             <View style={styles.modalContent}>
-              <Text style={styles.modalTitle}>Уведомление о безопасности</Text>
-              <Text style={styles.modalBody}>
-                Ыаы я текст, напишите меня
-              </Text>
+              <Text style={[styles.modalTitle, { fontFamily: Fonts.Regular }]}>
+  Уведомление о безопасности
+</Text>
+              <Text style={{ 
+                // Используем константу из fonts.js
+                fontFamily:  Fonts.HindVadodaraBold ,
+                textAlign: 'center',
+                paddingHorizontal: 5,
+                lineHeight: 22, 
+                }}> Перед началом проконсультируйтесь с врачом, избегайте перегрузок и выполняйте разминку. При
+                                      дискомфорте остановитесь. Используйте нескользящий коврик и занимайтесь в безопасном
+                                      пространстве. Практикуйте осознанно!</Text>
               <TouchableOpacity
                 style={styles.modalButton}
                 onPress={() => setModalVisible(false)}

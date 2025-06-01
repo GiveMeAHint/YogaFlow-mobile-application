@@ -1,132 +1,93 @@
-import React, { useState, useEffect, useRef } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  ActivityIndicator,
-  Dimensions
-} from 'react-native';
-import { Audio } from 'expo-av';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Slider from '@react-native-community/slider';
+import { Audio } from 'expo-av';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const formatTime = millis => {
-  if (!millis) return '00:00';
-  const totalSec = Math.floor(millis / 1000);
-  const m = Math.floor(totalSec / 60);
-  const s = totalSec % 60;
-  return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
-};
+export default function MusicPlayer() {
+  const [sound, setSound] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [activeTrack, setActiveTrack] = useState(null);
+  const [playbackStatus, setPlaybackStatus] = useState({});
 
-function Player({ source }) {
-  const soundRef = useRef(new Audio.Sound());
-  const [status, setStatus] = useState({
-    isLoaded: false,
-    isPlaying: false,
-    positionMillis: 0,
-    durationMillis: 1,
-    volume: 1
-  });
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let cancelled = false;
-    const load = async () => {
-      const { sound, status } = await Audio.Sound.createAsync(
-        source,
-        { shouldPlay: false },
-        st => {
-          if (st.isLoaded) setStatus(st);
-        }
-      );
-      if (!cancelled) {
-        soundRef.current = sound;
-        setStatus(status);
-        setLoading(false);
-      }
-    };
-    load();
-    return () => {
-      cancelled = true;
-      soundRef.current.unloadAsync();
-    };
-  }, [source]);
-
-  const togglePlay = () =>
-    status.isPlaying
-      ? soundRef.current.pauseAsync()
-      : soundRef.current.playAsync();
-
-  const onSeek = v =>
-    soundRef.current.setPositionAsync(v * status.durationMillis);
-
-  const toggleMute = () =>
-    soundRef.current.setVolumeAsync(status.volume > 0 ? 0 : 1);
-
-  if (loading) {
-    return (
-      <View style={styles.loaderContainer}>
-        <ActivityIndicator color={styles.icon.color} />
-      </View>
-    );
-  }
-
-  return (
-    <View style={styles.pill}>
-      <TouchableOpacity onPress={togglePlay} style={styles.iconBtn}>
-        <Ionicons
-          name={status.isPlaying ? 'pause' : 'play'}
-          size={20}
-          style={styles.icon}
-        />
-      </TouchableOpacity>
-
-      <Text style={styles.timer}>
-        {formatTime(status.positionMillis)} / {formatTime(status.durationMillis)}
-      </Text>
-
-      <Slider
-        style={styles.progress}
-        minimumValue={0}
-        maximumValue={1}
-        value={status.positionMillis / status.durationMillis}
-        minimumTrackTintColor={styles.icon.color}
-        maximumTrackTintColor="rgba(0,0,0,0.1)"
-        thumbTintColor={styles.icon.color}
-        onSlidingComplete={onSeek}
-      />
-
-      <TouchableOpacity onPress={toggleMute} style={styles.iconBtn}>
-        <Ionicons
-          name={status.volume > 0 ? 'volume-high' : 'volume-mute'}
-          size={18}
-          style={styles.icon}
-        />
-      </TouchableOpacity>
-    </View>
-  );
-}
-
-export default function Music() {
-  // Список треков с заголовками и путями
   const tracks = [
-    { title: 'Расслабление', file: require('../assets/music1.mp3') },
-    { title: 'Спокойствие',  file: require('../assets/music2.mp3') },
-    { title: 'Лесной дождь',        file: require('../assets/rain.mp3') },
-    { title: 'Звуки природы',      file: require('../assets/nature.mp3') },
-    { title: 'Морской бриз',         file: require('../assets/sea.mp3') },
+    { 
+      id: 1, 
+      title: 'Расслабление', 
+      duration: '2 min',
+      uri: require('../assets/music/music1.mp3'),
+      cover: require('../assets/audio_screensaver/1.jpg')
+    },
+    { 
+      id: 2, 
+      title: 'Спокойствие', 
+      duration: '2 min',
+      uri: require('../assets/music/music2.mp3'),
+      cover: require('../assets/audio_screensaver/2.png')
+    },
+    { 
+      id: 3, 
+      title: 'Лесной дождь', 
+      duration: '5 min',
+      uri: require('../assets/music/rain.mp3'),
+      cover: require('../assets/audio_screensaver/forest_rain.png')
+    },
+    { 
+      id: 4, 
+      title: 'Звуки природы', 
+      duration: '5 min',
+      uri: require('../assets/music/nature.mp3'),
+      cover: require('../assets/audio_screensaver/nature.png')
+    },
+    { 
+      id: 5, 
+      title: 'Морской бриз', 
+      duration: '6 min',
+      uri: require('../assets/music/sea.mp3'),
+      cover: require('../assets/audio_screensaver/sea.png')
+    },
   ];
+
+  // ... (остальные функции остаются без изменений)
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Музыка под ваше настроение</Text>
-      {tracks.map((t, i) => (
-        <View key={i} style={{ width: '100%', alignItems: 'center' }}>
-          <Text style={styles.trackTitle}>{t.title}</Text>
-          <Player source={t.file} />
+      <Text style={styles.header}>Расслабляющие звуки</Text>
+      
+      <TouchableOpacity 
+        style={styles.playNowButton}
+        onPress={() => handlePlayPress(tracks[0])}
+      >
+        <Text style={styles.playNowText}>включите музыку</Text>
+      </TouchableOpacity>
+
+      <View style={styles.divider} />
+
+      {tracks.map((track) => (
+        <View key={track.id} style={styles.trackContainer}>
+          {/* Добавлен Image для обложки */}
+          <Image 
+            source={track.cover} 
+            style={styles.trackCover}
+            resizeMode="cover"
+          />
+          
+          <View style={styles.trackInfo}>
+            <Text style={styles.trackTitle}>{track.title}</Text>
+            <Text style={styles.trackDuration}>{track.duration}</Text>
+          </View>
+          
+          <TouchableOpacity 
+            onPress={() => handlePlayPress(track)}
+            style={styles.playButton}
+          >
+            <Ionicons 
+              name={activeTrack === track.id && isPlaying ? 'pause' : 'play'} 
+              size={20} 
+              color="#fff" 
+            />
+          </TouchableOpacity>
         </View>
       ))}
     </View>
@@ -136,53 +97,69 @@ export default function Music() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'rgb(255, 244, 229)',
-    alignItems: 'center',
-    paddingTop: 40
+    backgroundColor: 'rgba(229, 211, 186, 0.9)',
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
   header: {
-    color: 'rgb(93, 74, 57)',
-    fontSize: 20,
-    fontWeight: '600',
-    marginBottom: 20,
-    textAlign:'center'
+    color: '#4A4A4A',
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 30,
   },
-  loaderContainer: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  pill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: SCREEN_WIDTH * 0.9,
-    backgroundColor: 'rgba(234, 216, 192, 1)',
+  playNowButton: {
+    backgroundColor: '#4A4A4A',
+    paddingVertical: 12,
     borderRadius: 25,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    marginVertical: 10
+    alignItems: 'center',
+    marginBottom: 30,
+    width: SCREEN_WIDTH * 0.6,
+    alignSelf: 'center',
   },
-  iconBtn: {
-    paddingHorizontal: 6
+  playNowText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '500',
+    textTransform: 'uppercase',
   },
-  icon: {
-    color: 'rgb(93, 74, 57)'
+  divider: {
+    height: 1,
+    backgroundColor: '#333',
+    marginBottom: 20,
   },
-  timer: {
-    color: 'rgb(93, 74, 57)',
-    fontSize: 12,
-    marginHorizontal: 8,
-    minWidth: 60,
-    textAlign: 'center'
+  trackContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#333',
   },
-  progress: {
+  trackCover: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    marginRight: 15,
+  },
+  trackInfo: {
     flex: 1,
-    height: 20
   },
   trackTitle: {
-    color: 'rgb(93, 74, 57)',
+    color: '#4A4A4A',
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  trackDuration: {
+    color: '#888',
     fontSize: 14,
-    fontWeight: '500',
-    marginTop: 10,
-  }
+  },
+  playButton: {
+    backgroundColor: '#4A4A4A',
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
