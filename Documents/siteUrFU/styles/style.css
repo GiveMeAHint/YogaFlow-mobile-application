@@ -1,0 +1,332 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F3EFFF;  /* фон всей страницы */
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.app-container {
+    width: 100%;
+    max-width: 1440px;
+    background-color: #F3EFFF;
+    margin: 0 auto;
+}
+
+/* ===== ВЕРХНЯЯ ШАПКА ===== */
+.top-bar {
+    width: 100%;
+    height: 30px;
+    background-color: #1E4391;
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+}
+
+.top-bar-text {
+    color: white;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+/* ===== ВТОРАЯ СТРОКА: Меню (с иконкой рядом) | Имя | Выход ===== */
+.action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background-color: #F3EFFF;
+}
+
+.menu-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;  /* иконка и кнопка ближе */
+}
+
+.menu-icon-large {
+    height: 42px;   /* увеличили размер */
+    width: auto;
+    object-fit: contain;
+}
+
+.action-btn {
+    background-color: #E50079;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+    opacity: 0.85;
+}
+
+.user-name-center {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1E2A3E;
+    font-size: 15px;
+}
+
+.account-icon {
+    font-size: 24px;
+    color: #000000;
+}
+
+/* ===== ОСНОВНОЙ БЛОК С ФОНОМ #E4EDFF ===== */
+.content-card {
+    background-color: #E4EDFF;
+    margin: 0 24px 32px 24px;
+    border-radius: 5px;
+    padding: 24px 28px 32px 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+/* Заголовок таблицы*/
+.table-title {
+    width: 100%;
+    font-size: 20px;
+    font-style: bold;
+    color: black;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+/* Таблица */
+.table-wrapper {
+    flex: 2;
+    min-width: 280px;
+    background: transparent;
+    
+}
+
+/* Таблица — цельная, без разрывов */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    background-color: #F1F5F9;
+}
+
+/* Все ячейки — по центру */
+.data-table th,
+.data-table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 8px;
+}
+
+/* Общий фон для th — прозрачный, чтобы видно было фон таблицы */
+.data-table th {
+    background-color: transparent;
+    padding: 8px 4px;  /* чуть меньше, чтобы кнопки не слипались */
+}
+
+/* А вот это — САМИ КНОПКИ внутри th */
+.data-table th .col-button {
+    background-color: #658FE9;
+    color: white;
+    font-weight: 600;
+    padding: 10px 8px;
+    text-align: center;
+    border-radius: 0px;
+    display: block;
+    min-width: 120px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+
+/* Ячейки с данными */
+.data-table td {
+    background-color: #F1F5F9;
+    color: #1A2C3E;
+    border-bottom: 1px solid #D1E0F5;
+    border-right: 1px solid #D1E0F5;
+}
+
+/* Шахматный узор */
+.data-table tr:nth-child(odd) td:nth-child(odd) {
+    background-color: #ffffff;  /* белый */
+}
+
+.data-table tr:nth-child(odd) td:nth-child(even) {
+    background-color: #F1F5F9;  /* серый */
+}
+
+/* Чётные строки (2, 4, 6...) — цвета меняются местами */
+.data-table tr:nth-child(even) td:nth-child(odd) {
+    background-color: #F1F5F9;  /* серый */
+}
+
+.data-table tr:nth-child(even) td:nth-child(even) {
+    background-color: #ffffff;  /* белый */
+}
+
+
+.data-table thead tr {
+    border-bottom: 1px solid #E2E8F0;
+}
+
+
+.data-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Стиль названий колонок  */
+.col-button-style {
+    background-color: #658FE9;
+    color: white;
+    font-weight: 600;
+    padding: 10px 8px;
+    border-radius: 5px;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    letter-spacing: 0.3px;
+    width: 85%; 
+}
+
+/* ПРАВАЯ ЧАСТЬ */
+.right-panel {
+    flex: 1.2;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.info-card {
+    background-color: #FEF2F2;
+    border-radius: 5px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.card-title {
+    font-size: 20px;
+    color: black;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-left: 12px;
+    text-align: center;
+}
+
+.total-number {
+    font-size: 56px;
+    color: #F1F5F9;
+    text-align: center;
+    background: #658FE9;
+    border-radius: 5px;
+    padding: 12px 8px;
+}
+
+/* ЧЕКБОКС */
+.risk-toggle {
+    background-color: #FEF2F2;
+    padding: 14px 18px;
+    border-radius: 5px;
+}
+
+.risk-label {
+    color: #1F2A40;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    text-align: center;
+    gap: 10px;
+}
+
+.risk-checkbox {
+    display: none;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    background: #658FE9;
+    border-radius: 6px;
+    border: 2px solid #658FE9;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.checkbox-custom::after {
+    content: "✓";
+    font-size: 14px;
+    color: #000000;
+    display: none;
+    text-align: center;
+    line-height: 16px;
+}
+
+.risk-checkbox:checked + .checkbox-custom::after {
+    display: block;
+}
+
+/* оповещения */
+.alerts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 6px;
+}
+
+.alert-item {
+    font-size: 13px;
+    padding: 6px 6px 6px 0;
+    border-bottom: 1px solid #FFE2E2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.alert-badge {
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+}
+
+.alert-red {
+    background-color: #E50079;
+}
+
+.alert-green {
+    background-color: #2BA150;
+}
+
+.alert-text {
+    color: #1E293B;
+}
+
+/* адаптив */
+@media (max-width: 850px) {
+    .content-card {
+        flex-direction: column;
+        margin: 0 16px 24px 16px;
+        padding: 20px;
+    }
+    .action-bar {
+        padding: 12px 20px;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+    .menu-icon-large {
+        height: 32px;
+    }
+}

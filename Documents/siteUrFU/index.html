@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мониторинг УрФУ</title>
+    <link rel="stylesheet" href="/styles/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- ВЕРХНЯЯ ШАПКА -->
+        <div class="top-bar">
+            <div class="top-bar-text">Портал УрФУ</div>
+        </div>
+
+        <!-- ВТОРАЯ СТРОКА: Иконка + Меню | Имя | Выход -->
+        <div class="action-bar">
+            <div class="menu-wrapper">
+                <img src="images/iconUrFU.png" alt="icon" class="menu-icon-large">
+                <button class="action-btn" id="menuBtn">Меню</button>
+            </div>
+            <div class="user-name-center">
+                <span class="material-icons account-icon">account_circle</span> Барецкий Стас Михайлович
+            </div>
+            <button class="action-btn" id="logoutBtn">Выход</button>
+        </div>
+
+        <!-- ОСНОВНОЙ БЛОК С ФОНОМ #E4EDFF -->
+        <div class="content-card">
+            <!-- Заголовок таблицы -->
+            <div class="table-title">Мониторинг приёмной кампании</div>
+
+            <!-- ТАБЛИЦА -->
+            <div class="table-wrapper">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th><span class="col-button-style">Направление</span></th>
+                            <th><span class="col-button-style">Подано заявлений</span></th>
+                            <th><span class="col-button-style">КЦП</span></th>
+                            <th><span class="col-button-style">% Выполнения</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Экология</td>
+                            <td>25</td>
+                            <td>75</td>
+                            <td class="percent-cell" data-percent="25">25%</td>
+                        </tr>
+                        <tr>
+                            <td>Психология</td>
+                            <td>169</td>
+                            <td>100</td>
+                            <td class="percent-cell" data-percent="160">160%</td>
+                        </tr>
+                        <tr>
+                            <td>Экономика</td>
+                            <td>85</td>
+                            <td>100</td>
+                            <td class="percent-cell" data-percent="100">100%</td>
+                        </tr>
+                        <tr>
+                            <td>Информатика и вычислительная техника</td>
+                            <td>36</td>
+                            <td>100</td>
+                            <td class="percent-cell" data-percent="10">10%</td>
+                        </tr>
+                        <tr>
+                            <td>Искусственный интеллект</td>
+                            <td>123</td>
+                            <td>100</td>
+                            <td class="percent-cell" data-percent="110">110%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ПРАВАЯ ЧАСТЬ (справа от таблицы) -->
+            <div class="right-panel">
+                <!-- Общее количество поданных заявлений -->
+                <div class="info-card">
+                    <div class="card-title">Общее количество поданных заявлений</div>
+                    <div class="total-number">5246</div>
+                </div>
+
+                <!-- Чекбокс -->
+                <div class="risk-toggle">
+                    <label class="risk-label">
+                        <input type="checkbox" id="riskCheckbox" class="risk-checkbox">
+                        <span class="checkbox-custom"></span>
+                        Включить оповещения о рисках
+                    </label>
+                </div>
+
+                <!-- Оповещения -->
+                <div class="info-card" id="alertsCard">
+                    <div class="card-title">Оповещения</div>
+                    <div class="alerts-list">
+                        <div class="alert-item">
+                            <span class="alert-badge alert-red"></span>
+                            <span class="alert-text">Экология - 25% (недобор)</span>
+                        </div>
+                        <div class="alert-item">
+                            <span class="alert-badge alert-red"></span>
+                            <span class="alert-text">Психология - 160% (перебор)</span>
+                        </div>
+                        <div class="alert-item">
+                            <span class="alert-badge alert-green"></span>
+                            <span class="alert-text">Экономика - 100% (норма)</span>
+                        </div>
+                        <div class="alert-item">
+                            <span class="alert-badge alert-red"></span>
+                            <span class="alert-text">Информатика и вычислительная техника - 10% (недобор)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/script.js"></script>
+</body>
+</html>
